@@ -14,91 +14,30 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-/**
- * An Pong is a Java graphical container that extends the JPanel class in
- * order to display graphical elements.
- */
+/** A Pong is a Java graphical container that extends the JPanel class in order to display graphical elements. */
+
 public class Pong extends JPanel implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Constant (c.f. final) common to all Pong instances (c.f. static)
-	 * defining the background color of the Pong
-	 */
-	private static final Color backgroundColor = new Color(0xFF, 0x40, 0);
-
-	/**
-	 * Width of pong area
-	 */
-	private static final int SIZE_PONG_X = 800;
-	/**
-	 * Height of pong area
-	 */
-	private static final int SIZE_PONG_Y = 600;
-	/**
-	 * Time step of the simulation (in ms)
-	 */
-	public static final int timestep = 10;
-	/**
-	 * Speed of ball (in pixels per second)
-	 */
-	public static final int BALL_SPEED = 2;
-	/**
-	 * Speed of racket (in pixels per second)
-	 */
-	public static final int RACKET_SPEED = 4;
-
-	/**
-	 * Pixel data buffer for the Pong rendering
-	 */
-	private Image buffer = null;
-	/**
-	 * Graphic component context derived from buffer Image
-	 */
-	private Graphics graphicContext = null;
-
-	/**
-	 * Ball to be displayed
-	 */
-	private final Image ball;
-	/**
-	 * Width of ball in pixels
-	 */
-	private int ball_width;
-	/**
-	 * Height of ball in pixels
-	 */
-	private int ball_height;
-	/**
-	 * Position of ball
-	 */
-	private Point ball_position = new Point(0, 0);
-	/**
-	 * Speed of ball, in pixels per timestep
-	 */
-	private Point ball_speed = new Point(BALL_SPEED, BALL_SPEED);
-
-	/**
-	 * One Racket to be displayed
-	 */
-	private final Image racket;
-	/**
-	 * Width of the racket in pixels
-	 */
-	private int racket_width;
-	/**
-	 * Height of the racket in pixels
-	 */
-	private int racket_height;
-	/**
-	 * Speed of racket, in pixels per timestamp
-	 */
-	private int racket_speed;
-	/**
-	 * Position of racket
-	 */
-	private Point racket_position = new Point(0, 0);
+	/** Constant (c.f. final) common to all Pong instances (c.f. static) defining the background color of the Pong */
+	private static final Color backgroundColor = new Color(0xFF, 0x40, 0);	
+	private static final int SIZE_PONG_X = 800;// Width of pong area
+	private static final int SIZE_PONG_Y = 600;/** Height of pong area */
+	public static final int timestep = 10; // Time step of the simulation (in ms)
+	public static final int BALL_SPEED = 2; /** Speed of ball (in pixels per second) */
+	public static final int RACKET_SPEED = 4; // Speed of racket (in pixels per second)
+	private Image buffer = null; /** Pixel data buffer for the Pong rendering */
+	private Graphics graphicContext = null;/** Graphic component context derived from buffer Image */
+	private final Image ball; /** Ball to be displayed */
+	private int ball_width; /** Width of ball in pixels */
+	private int ball_height; /** Height of ball in pixels */
+	private Point ball_position = new Point(0, 0);/** Position of ball */
+	private Point ball_speed = new Point(BALL_SPEED, BALL_SPEED);/** Speed of ball, in pixels per timestep */
+	private final Image racket;/** One Racket to be displayed */
+	private int racket_width;/** Width of the racket in pixels */
+	private int racket_height;/** Height of the racket in pixels */
+	private int racket_speed;/** Speed of racket, in pixels per timestamp */
+	private Point racket_position = new Point(0, 0);/** Position of racket */
 
 	public Pong() {
 		ImageIcon icon;
@@ -119,29 +58,23 @@ public class Pong extends JPanel implements KeyListener {
 		this.addKeyListener(this);
 	}
 
-	/**
-         * Proceeds to the movement of the ball and updates the screen
-	 */
+	/** Proceeds to the movement of the ball and updates the screen */
 	public void animate() {
 		/* Update ball position */
 		ball_position.translate(ball_speed.x, ball_speed.y);
-		if (ball_position.x < 0)
-		{
+		if (ball_position.x < 0){
 			ball_position.x = 0;
 			ball_speed.x = -ball_speed.x;
 		}
-		if (ball_position.y < 0)
-		{
+		if (ball_position.y < 0){
 			ball_position.y = 0;
 			ball_speed.y = -ball_speed.y;
 		}
-		if (ball_position.x > SIZE_PONG_X - ball_width)
-		{
+		if (ball_position.x > SIZE_PONG_X - ball_width){
 			ball_position.x = SIZE_PONG_X - ball_width;
 			ball_speed.x = -ball_speed.x;
 		}
-		if (ball_position.y > SIZE_PONG_Y - ball_height)
-		{
+		if (ball_position.y > SIZE_PONG_Y - ball_height){
 			ball_position.y = SIZE_PONG_Y - ball_height;
 			ball_speed.y = -ball_speed.y;
 		}

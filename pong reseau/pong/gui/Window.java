@@ -2,30 +2,20 @@ package pong.gui;
 
 import javax.swing.JFrame;
 
-/**
- * A Window is a Java frame containing an Pong
- */
+/** A Window is a Java frame containing a Pong */
 public class Window extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Pong component to be displayed
-	 */
+	/** Pong component to be displayed */
 	private final Pong pong;
 
-	/**
-	 * Constructor
-	 */
 	public Window(Pong pong) {
 		this.pong = pong;
 		this.addKeyListener(pong);
 	}
 
-	/**
-	 * Displays the Window using the defined margins, and call the
-	 * {@link Pong#animate()} method of the {@link Pong} every 100ms
-	 */
+	/** Displays the Window using the defined margins, and call the {@link Pong#animate()} method of the {@link Pong} every 100ms */
 	public void displayOnscreen() {
 		add(pong);
 		pack();
