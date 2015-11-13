@@ -1,7 +1,10 @@
 package pong.gui;
 
+
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Image;
+
 import javax.swing.ImageIcon;
 
 public class PongItem {
@@ -11,13 +14,16 @@ public class PongItem {
 	protected int height;
 	protected Point position;
 	
-	public PongItem(Image i){
+	public PongItem(Image img){
 		ImageIcon icon;
-		img=i; //sale?
-		icon=new ImageIcon(i);
+		this.img = img; //sale?
+		icon = new ImageIcon(img);
 		this.width=icon.getIconWidth();
 		this.height=icon.getIconHeight();
-		
+	}
+	
+	public void draw(Graphics graphicContext){
+		graphicContext.drawImage(this.img, position.x, position.y, width, height, null);
 	}
 
 }

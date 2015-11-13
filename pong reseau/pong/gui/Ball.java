@@ -1,13 +1,19 @@
 package pong.gui;
 
 import java.awt.Image;
+import java.awt.Point;
 
 
 public class Ball extends PongItem{
 	public static final int BALL_SPEED = 2; /** Speed of ball (in pixels per second) */
 	
-	public Ball(Image i){
-		super(i);
+	
+	//private static final long serialVersionUID = 1L;
+
+	public Ball(Image img){
+		super(img);
+		position = new Point(0, 0);/** Position of ball */
+		speed = new Point(BALL_SPEED, BALL_SPEED);/** Speed of ball, in pixels per timestep */
 	}
 	
 	public void animate(int SIZE_PONG_X,int SIZE_PONG_Y){
