@@ -8,7 +8,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class PongItem {
-	protected Image img;
+	protected final Image img;//final?
 	protected Point speed;
 	protected int width;
 	protected int height;
