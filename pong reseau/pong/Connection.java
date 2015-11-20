@@ -30,19 +30,19 @@ public class Connection{
 
 
   public Connection(int port, String nomMachine){
-		  Socket socket;
-		  DataInputStream userInput;
-		  PrintStream theOutputStream;
-		  try {
-			  InetAddress serveur = InetAddress.getByName(nomMachine);
-			  socket = new Socket(serveur, port);
+	Socket socket;
+	DataInputStream userInput;
+	PrintStream theOutputStream;
+	try {
+		InetAddress serveur = InetAddress.getByName(nomMachine);
+		socket = new Socket(serveur, port);
 
-			  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			  PrintStream out = new PrintStream(socket.getOutputStream());
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		PrintStream out = new PrintStream(socket.getOutputStream());
 
-	      	} catch (Exception e) {
-	      		e.printStackTrace();
-	      	}
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
 	    
-  		}	
-	}	
+  }	
+}	
