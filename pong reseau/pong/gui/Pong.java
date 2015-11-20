@@ -26,7 +26,7 @@ public class Pong extends JPanel implements KeyListener {
 	public static final int timestep = 10; // Time step of the simulation (in ms)
 	private Image buffer = null; /** Pixel data buffer for the Pong rendering */
 	private Graphics graphicContext = null;/** Graphic component context derived from buffer Image */
-	private Ball ball;
+	protected Ball ball;
 	private Racket racket;/** One Racket to be displayed */
 	public static final int RACKET_SPEED = 4; // Speed of racket (in pixels per second)
 	
@@ -38,6 +38,10 @@ public class Pong extends JPanel implements KeyListener {
 				ClassLoader.getSystemResource("image/racket.png")));
 		this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
 		this.addKeyListener(this);
+	}
+	
+	public Ball getBall(){
+		return this.ball;
 	}
 
 	/** Proceeds to the movement of the ball and updates the screen */
@@ -112,7 +116,7 @@ public class Pong extends JPanel implements KeyListener {
 		ball.draw(graphicContext);
 		//graphicContext.drawImage(ball, ball_position.x, ball_position.y, ball_width, ball_height, null);
 		racket.draw(graphicContext);
-		//graphicContext.drawImage(racket, racket_position.x, racket_position.y, racket_width, racket_height, null);
+		//graphicContext.drawImage(racket, racket_position.x, racket_position.y, racket_width, racket_height, null)
 
 		this.repaint();
 	}
