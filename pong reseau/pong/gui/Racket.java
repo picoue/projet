@@ -22,6 +22,10 @@ public class Racket extends PongItem{
 		speed = new Point(0, 0);
 	}
 	
+	public void setY(int y){
+		this.position.y=y;
+	}
+	
 	public void animate(int SIZE_PONG_Y){
 		this.position.y += this.speed.y;
 		if (this.position.y < 0)

@@ -24,7 +24,13 @@ public class Ball extends PongItem{
 		return false; 
 	}
 	
+	public void setY(int y){
+		this.position.y=y;
+	}
 	
+	public void setX(int x){
+		this.position.x=x;
+	}
 	
 	public void animate(int SIZE_PONG_X,int SIZE_PONG_Y, Racket racket){
 		this.position.translate(this.speed.x, this.speed.y);

@@ -8,8 +8,12 @@ import pong.gui.Pong;
  */
 public class Main  {
 	public static void main(String[] args) {
-		Pong pong = new Pong();
-		Window window = new Window(pong);
-		window.displayOnscreen();
+		String t[] = "myballs.right=big".split("\\.|=");
+		for(int i=0;i<t.length;i++){
+			System.out.println(t[i]);
+		}
+		//Pong pong = new Pong();
+		//Window window = new Window(pong);
+		//window.displayOnscreen();
 	}
 }

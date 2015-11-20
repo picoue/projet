@@ -3,7 +3,10 @@ package pong;
 import java.net.*;
 import java.io.*;
 
+import pong.gui.*;
+
 public class Connection{
+	private BufferedReader in;
 	
   public Connection(int port){
     try {
@@ -12,13 +15,11 @@ public class Connection{
 
       while (true) {
         Socket socketClient = socketServeur.accept();
-        
-
+   
         // InputStream in = socketClient.getInputStream();
         // OutputStream out = socketClient.getOutputStream();
-
-        BufferedReader in = new BufferedReader(
-          new InputStreamReader(socketClient.getInputStream()));
+        
+        in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
         PrintStream out = new PrintStream(socketClient.getOutputStream());
         socketClient.close();
       }
@@ -26,6 +27,29 @@ public class Connection{
       e.printStackTrace();
     }
   }
+  
+  	public void update(Ball ball, Racket racket){
+  		try {
+			while(in.ready()){
+				String s = in.readLine();//todo : tester que la ligne est bien complete
+				String t[] = s.split("\\.|=");
+				if(t[0].equals("ball")){
+					if(t[1].equals("y"))
+						ball.setY(Integer.parseInt(t[2]));
+					else
+						ball.setX(Integer.parseInt(t[2]));	
+				}
+				if(t[0].equals("racket")){
+					racket.setY(Integer.parseInt(t[2]));
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  		
+  	}
+  
 
 
 
