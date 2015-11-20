@@ -12,12 +12,21 @@ public class Ball extends PongItem{
 
 	public Ball(Image img){
 		super(img);
-		position = new Point(0, 0);/** Position of ball */
+		position = new Point(100, 0);/** Position of ball *///changemeeee
 		speed = new Point(BALL_SPEED, BALL_SPEED);/** Speed of ball, in pixels per timestep */
 	}
 	
-	public void animate(int SIZE_PONG_X,int SIZE_PONG_Y){
+	public boolean hit(Racket racket){
+		if(position.x < racket.getPosition().x + racket.getWidth() && position.x + width > racket.getPosition().x)
+			if(position.y < racket.getPosition().y + racket.getHeight() && position.y + height > racket.getPosition().y)
+				return true;
+		return false;
+	}
+	
+	public void animate(int SIZE_PONG_X,int SIZE_PONG_Y, Racket racket){
 		this.position.translate(this.speed.x, this.speed.y);
+		if (hit(racket))
+			this.speed.x = -this.speed.x;
 		if (this.position.x < 0){
 			this.position.x = 0;
 			this.speed.x = -this.speed.x;

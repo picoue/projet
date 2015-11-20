@@ -14,6 +14,18 @@ public class PongItem {
 	protected int height;
 	protected Point position;
 	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
+	
+	public Point getPosition(){
+		return (Point) position.clone();
+	}
+	
 	public PongItem(Image img){
 		ImageIcon icon;
 		this.img = img; //sale?
