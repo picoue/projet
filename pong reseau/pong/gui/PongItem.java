@@ -13,6 +13,7 @@ public class PongItem {
 	protected int width;
 	protected int height;
 	protected Point position;
+	protected String name;
 	
 	public int getWidth(){
 		return width;
@@ -24,6 +25,12 @@ public class PongItem {
 	
 	public Point getPosition(){
 		return (Point) position.clone();
+	}
+	
+	public String toString(){
+		String s = name + ".x." + position.x + "\n";
+		s += name + ".y." + position.y + "\n";
+		return s;
 	}
 	
 	public PongItem(Image img){

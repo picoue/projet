@@ -7,26 +7,28 @@ import pong.gui.*;
 
 public class Connection{
 	private BufferedReader in;
+	private PrintStream out;
 	
-  public Connection(int port){
-    try {
-      ServerSocket socketServeur = new ServerSocket(port);
-      System.out.println("Lancement du serveur");
+	public Connection(int port){
+		try {
+			ServerSocket socketServeur = new ServerSocket(port);// TODO : Close me after
+			socketServeur.setReuseAddress(true);
+			System.out.println("Lancement du serveur");
 
-      while (true) {
-        Socket socketClient = socketServeur.accept();
+			while (true) {
+				Socket socketClient = socketServeur.accept();
    
-        // InputStream in = socketClient.getInputStream();
-        // OutputStream out = socketClient.getOutputStream();
+				// InputStream in = socketClient.getInputStream();
+				// OutputStream out = socketClient.getOutputStream();
         
-        in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
-        PrintStream out = new PrintStream(socketClient.getOutputStream());
-        socketClient.close();
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+				in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+				out = new PrintStream(socketClient.getOutputStream());
+				socketClient.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
   
   	public void update(Ball ball, Racket racket){
   		try {
@@ -47,26 +49,24 @@ public class Connection{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-  		
   	}
   
+  	public Connection(String nomMachine, int port){
+  		Socket socket;
 
+  		try {
+  			InetAddress serveur = InetAddress.getByName(nomMachine);
+  			socket = new Socket(serveur, port);
 
+  			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+  			out = new PrintStream(socket.getOutputStream());
 
-  public Connection(int port, String nomMachine){
-	Socket socket;
-	DataInputStream userInput;
-	PrintStream theOutputStream;
-	try {
-		InetAddress serveur = InetAddress.getByName(nomMachine);
-		socket = new Socket(serveur, port);
-
-		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		PrintStream out = new PrintStream(socket.getOutputStream());
-
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-	    
-  }	
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  		}
+  	}
+  
+  	public void send(PongItem p){
+  		out.print(p.toString());
+  	}
 }	

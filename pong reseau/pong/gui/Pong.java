@@ -8,11 +8,15 @@ import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.swing.ImageIcon;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+import pong.Connection;
 
 /** A Pong is a Java graphical container that extends the JPanel class in order to display graphical elements. */
 
@@ -29,6 +33,7 @@ public class Pong extends JPanel implements KeyListener {
 	protected Ball ball;
 	private Racket racket;/** One Racket to be displayed */
 	public static final int RACKET_SPEED = 4; // Speed of racket (in pixels per second)
+	protected Connection conn;
 	
 
 	public Pong() {
@@ -38,6 +43,11 @@ public class Pong extends JPanel implements KeyListener {
 				ClassLoader.getSystemResource("image/racket.png")));
 		this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
 		this.addKeyListener(this);
+	}
+	
+	public Pong(Connection conn){
+		this();
+		this.conn = conn;
 	}
 	
 	public Ball getBall(){
