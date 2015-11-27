@@ -20,7 +20,6 @@ public class Racket extends PongItem{
 		super(img);
 		position = new Point(0, 0);
 		speed = new Point(0, 0);
-		name = "racket";// TODO : le faire en static
 	}
 	
 	public void setY(int y){

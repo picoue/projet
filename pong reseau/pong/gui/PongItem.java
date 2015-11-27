@@ -13,7 +13,7 @@ public class PongItem {
 	protected int width;
 	protected int height;
 	protected Point position;
-	protected String name;// TODO : static ma gueule
+	protected String name;
 	
 	public int getWidth(){
 		return width;
