@@ -30,12 +30,11 @@ public class Connection{
 		}
 	}
   
-  	public void update(Ball ball, Racket racket){
+  	public void receive(Ball ball, Racket racket){
   		try {
 			while(in.ready()){
 				String s = in.readLine();// TODO : tester que la ligne est bien complete
 				String t[] = s.split("\\.|=");
-		  		System.out.println(s);// TODO remove debug
 				if(t[0].equals("ball")){
 					if(t[1].equals("y"))
 						ball.setY(Integer.parseInt(t[2]));
