@@ -112,8 +112,9 @@ public class Pong extends JPanel implements KeyListener {
 	public void updateScreen() {
 		if (conn != null){
 			conn.send(racket);
-			conn.send(ball);
+			conn.send(ball);// TODO si dans ma zone
 		}
+		conn.update(ball, racket);
 		if (buffer == null) {
 			/* First time we get called with all windows initialized */
 			buffer = createImage(SIZE_PONG_X, SIZE_PONG_Y);

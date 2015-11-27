@@ -15,6 +15,7 @@ public class Ball extends PongItem{
 		super(img);
 		position = new Point(100, 0);/** Position of ball *///changemeeee
 		speed = new Point(BALL_SPEED, BALL_SPEED);/** Speed of ball, in pixels per timestep */
+		name = "ball";// TODO : le faire en static
 	}
 	
 	public boolean hit(Racket racket){
