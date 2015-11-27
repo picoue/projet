@@ -30,7 +30,7 @@ public class Connection{
 		}
 	}
   
-  	public void update(Ball ball, Racket racket){
+  	public void receive(Ball ball, Racket racket){
   		try {
 			while(in.ready()){
 				String s = in.readLine();//todo : tester que la ligne est bien complete
