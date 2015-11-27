@@ -110,6 +110,10 @@ public class Pong extends JPanel implements KeyListener {
 	 * Draw each Pong item based on new positions
 	 */
 	public void updateScreen() {
+		if (conn != null){
+			conn.send(racket);
+			conn.send(ball);
+		}
 		if (buffer == null) {
 			/* First time we get called with all windows initialized */
 			buffer = createImage(SIZE_PONG_X, SIZE_PONG_Y);
