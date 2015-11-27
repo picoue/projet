@@ -15,7 +15,7 @@ public class Connection{
 			socketServeur.setReuseAddress(true);
 			System.out.println("Lancement du serveur");
 
-			while (true) {
+			//while (true) {
 				Socket socketClient = socketServeur.accept();
    
 				// InputStream in = socketClient.getInputStream();
@@ -23,8 +23,8 @@ public class Connection{
         
 				in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 				out = new PrintStream(socketClient.getOutputStream());
-				socketClient.close();
-			}
+				//socketClient.close();?
+			//}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
