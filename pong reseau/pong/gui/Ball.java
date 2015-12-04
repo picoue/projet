@@ -5,7 +5,7 @@ import java.awt.Point;
 
 
 public class Ball extends PongItem{
-	public static final int BALL_SPEED = 2; /** Speed of ball (in pixels per second) */
+	public static final int BALL_SPEED = 3; /** Speed of ball (in pixels per second) */
 	protected boolean gameOver = false;
 	
 	
