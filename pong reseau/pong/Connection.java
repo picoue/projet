@@ -33,7 +33,7 @@ public class Connection{
   	public void receive(Ball ball, Racket racket){
   		try {
 			while(in.ready()){
-				String s = in.readLine();//todo : tester que la ligne est bien complete
+				String s = in.readLine();//TODO : tester que la ligne est bien complete
 				String t[] = s.split("\\.|=");
 				if(t[0].equals("ball")){
 					if(t[1].equals("y"))

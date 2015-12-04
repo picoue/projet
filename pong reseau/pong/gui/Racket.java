@@ -30,8 +30,8 @@ public class Racket extends PongItem{
 		this.position.y += this.speed.y;
 		if (this.position.y < 0)
 			this.position.y = 0;
-		if (this.position.y > SIZE_PONG_Y - this.height/2)
-			this.position.y = SIZE_PONG_Y - this.height/2;
+		if (this.position.y > SIZE_PONG_Y - this.height)
+			this.position.y = SIZE_PONG_Y - this.height;
 	}
 	
 }
