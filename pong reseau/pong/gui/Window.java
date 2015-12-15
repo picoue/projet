@@ -1,5 +1,7 @@
 package pong.gui;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 /** A Window is a Java frame containing a Pong */
@@ -15,8 +17,10 @@ public class Window extends JFrame {
 		this.addKeyListener(pong);
 	}
 
-	/** Displays the Window using the defined margins, and call the {@link Pong#animate()} method of the {@link Pong} every 100ms */
-	public void displayOnscreen() {
+	/** Displays the Window using the defined margins, and call the {@link Pong#animate()} method of the {@link Pong} every 100ms 
+	 * @throws IOException 
+	 * @throws NumberFormatException */
+	public void displayOnscreen() throws NumberFormatException, IOException {
 		add(pong);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

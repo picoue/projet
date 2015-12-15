@@ -11,6 +11,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +55,11 @@ public class Pong extends JPanel implements KeyListener {
 		return this.ball;
 	}
 
-	/** Proceeds to the movement of the ball and updates the screen */
-	public void animate() {
+	/** Proceeds to the movement of the ball and updates the screen 
+	 * @throws IOException 
+	 * @throws NumberFormatException */
+	public void animate() throws NumberFormatException, IOException {
+		conn.receive(ball, racket);
 		ball.animate(SIZE_PONG_X, SIZE_PONG_Y, racket);
 		racket.animate(SIZE_PONG_Y);
 		updateScreen();
@@ -114,7 +118,6 @@ public class Pong extends JPanel implements KeyListener {
 			conn.send(racket);
 			conn.send(ball);
 		}
-		conn.receive(ball, racket);
 		if (buffer == null) {
 			/* First time we get called with all windows initialized */
 			buffer = createImage(SIZE_PONG_X, SIZE_PONG_Y);

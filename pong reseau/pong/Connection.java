@@ -30,24 +30,20 @@ public class Connection{
 		}
 	}
   
-  	public void receive(Ball ball, Racket racket){
-  		try {
-			while(in.ready()){
-				String s = in.readLine();//TODO : tester que la ligne est bien complete
-				String t[] = s.split("\\.|=");
-				if(t[0].equals("ball")){
-					if(t[1].equals("y"))
-						ball.setY(Integer.parseInt(t[2]));
-					else
-						ball.setX(Integer.parseInt(t[2]));	
-				}
-				if(t[0].equals("racket")){
-					racket.setY(Integer.parseInt(t[2]));
-				}
+  	public void receive(Ball ball, Racket racket) throws NumberFormatException, IOException{
+		while(in.ready()){
+			String s = in.readLine();//TODO : tester que la ligne est bien complete
+			System.out.println(s);
+			String t[] = s.split("\\.|=");
+			if(t[0].equals("ball")){
+				if(t[1].equals("y"))
+					ball.setY(Integer.parseInt(t[2]));
+				else
+					ball.setX(Integer.parseInt(t[2]));	
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(t[0].equals("racket")){
+				racket.setY(Integer.parseInt(t[2]));
+			}
 		}
   	}
   
