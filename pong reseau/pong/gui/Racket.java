@@ -1,30 +1,24 @@
 package pong.gui;
 
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.Image;
 
 
 public class Racket extends PongItem{
+	public static final int RACKET_SPEED = 4; // Speed of racket (in pixels per timestamp)
 	
-	public static final int RACKET_SPEED = 4; // Speed of racket (in pixels per second)
-	//private int racket_speed;/** Speed of racket, in pixels per timestamp */
-
-	//public int getSpeed(){
-	//	return this.speed.y;
-	//}
-	public void setSpeed(int racket_speed){
-		this.speed.y = racket_speed;
-	}
-	public Racket(Image img){
+	public Racket(Image img, int x, int y){
 		super(img);
-		position = new Point(0, 0);
+		position = new Point(x, y);
 		speed = new Point(0, 0);
 		name = "racket";
 	}
 	
-	public void setY(int y){
-		this.position.y=y;
+	public Racket(Image img){
+		this(img, 0, 0);
+	}
+	public void setSpeed(int racket_speed){
+		this.speed.y = racket_speed;
 	}
 	
 	public void animate(int SIZE_PONG_Y){

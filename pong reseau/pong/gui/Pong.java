@@ -3,18 +3,11 @@ package pong.gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.ImageIcon;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JPanel;
 
 import pong.Connection;
@@ -33,15 +26,17 @@ public class Pong extends JPanel implements KeyListener {
 	private Graphics graphicContext = null;/** Graphic component context derived from buffer Image */
 	protected Ball ball;
 	private Racket racket;/** One Racket to be displayed */
+	private Racket racket2;
 	public static final int RACKET_SPEED = 4; // Speed of racket (in pixels per second)
-	protected Connection conn;
-	
+	protected Connection conn;	
 
 	public Pong() {
 		this.ball = new Ball(Toolkit.getDefaultToolkit().createImage(
 				ClassLoader.getSystemResource("image/ball.png")));
 		this.racket = new Racket(Toolkit.getDefaultToolkit().createImage(
 				ClassLoader.getSystemResource("image/racket.png")));
+		this.racket2 = new Racket(Toolkit.getDefaultToolkit().createImage(
+				ClassLoader.getSystemResource("image/racket.png")), SIZE_PONG_X - 50, 0);//TODO change -10
 		this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
 		this.addKeyListener(this);
 	}
@@ -49,6 +44,10 @@ public class Pong extends JPanel implements KeyListener {
 	public Pong(Connection conn){
 		this();
 		this.conn = conn;
+		if(conn.getPlayerID() == 1){
+			ball.setPositionX(SIZE_PONG_X - 100 - ball.getWidth());
+			ball.setSpeedX(- ball.getSpeed().x);
+		}
 	}
 	
 	public Ball getBall(){
@@ -59,7 +58,7 @@ public class Pong extends JPanel implements KeyListener {
 	 * @throws IOException 
 	 * @throws NumberFormatException */
 	public void animate() throws NumberFormatException, IOException {
-		conn.receive(ball, racket);
+		conn.receive(ball, racket2, SIZE_PONG_X);
 		ball.animate(SIZE_PONG_X, SIZE_PONG_Y, racket);
 		racket.animate(SIZE_PONG_Y);
 		updateScreen();
@@ -116,10 +115,11 @@ public class Pong extends JPanel implements KeyListener {
 	public void updateScreen() {
 		if (conn != null){
 			conn.send(racket);
-			conn.send(ball);
+			//if ((ball.getPosition().getX() < SIZE_PONG_X / 2) ^ (racket.getPosition().getX() > SIZE_PONG_X / 2))
+			if(ball.getPosition().getX() < 50)
+				conn.send(ball);
 		}
-		if (buffer == null) {
-			/* First time we get called with all windows initialized */
+		if (buffer == null) { //First time we get called with all windows initialized
 			buffer = createImage(SIZE_PONG_X, SIZE_PONG_Y);
 			if (buffer == null)
 				throw new RuntimeException("Could not instanciate graphics");
@@ -132,9 +132,8 @@ public class Pong extends JPanel implements KeyListener {
 
 		/* Draw items */
 		ball.draw(graphicContext);
-		//graphicContext.drawImage(ball, ball_position.x, ball_position.y, ball_width, ball_height, null);
 		racket.draw(graphicContext);
-		//graphicContext.drawImage(racket, racket_position.x, racket_position.y, racket_width, racket_height, null)
+		racket2.draw(graphicContext);
 
 		this.repaint();
 	}

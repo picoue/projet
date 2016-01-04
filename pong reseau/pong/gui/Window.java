@@ -1,7 +1,6 @@
 package pong.gui;
 
 import java.io.IOException;
-
 import javax.swing.JFrame;
 
 /** A Window is a Java frame containing a Pong */
@@ -31,7 +30,7 @@ public class Window extends JFrame {
 				break;
 			pong.animate();
 			try {
-				Thread.sleep(pong.timestep);
+				Thread.sleep(Pong.timestep);
 			} catch (InterruptedException e) {};
 		}
 	}

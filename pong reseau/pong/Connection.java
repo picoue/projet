@@ -6,12 +6,15 @@ import java.io.*;
 import pong.gui.*;
 
 public class Connection{
-	private BufferedReader in;
-	private PrintStream out;
+	protected BufferedReader in;
+	protected PrintStream out;
+	protected ServerSocket socketServeur;
+	protected int playerID;
 	
 	public Connection(int port){
 		try {
-			ServerSocket socketServeur = new ServerSocket(port);// TODO : Close me after
+			playerID = 0;
+			socketServeur = new ServerSocket(port);// TODO : Close me after
 			socketServeur.setReuseAddress(true);
 			System.out.println("Lancement du serveur");
 
@@ -29,27 +32,11 @@ public class Connection{
 			e.printStackTrace();
 		}
 	}
-  
-  	public void receive(Ball ball, Racket racket) throws NumberFormatException, IOException{
-		while(in.ready()){
-			String s = in.readLine();//TODO : tester que la ligne est bien complete
-			System.out.println(s);
-			String t[] = s.split("\\.|=");
-			if(t[0].equals("ball")){
-				if(t[1].equals("y"))
-					ball.setY(Integer.parseInt(t[2]));
-				else
-					ball.setX(Integer.parseInt(t[2]));	
-			}
-			if(t[0].equals("racket")){
-				racket.setY(Integer.parseInt(t[2]));
-			}
-		}
-  	}
-  
+	
   	public Connection(String nomMachine, int port){
   		Socket socket;
 
+  		playerID = 1;
   		try {
   			InetAddress serveur = InetAddress.getByName(nomMachine);
   			socket = new Socket(serveur, port);
@@ -61,8 +48,56 @@ public class Connection{
   			e.printStackTrace();
   		}
   	}
+  	
+  	public int getPlayerID(){
+  		return playerID;
+  	}
+  
+  	public void receive(Ball ball, Racket racket, int SIZE_PONG_X) throws NumberFormatException, IOException{
+		while(in.ready()){
+			String s = in.readLine();//TODO : tester que la ligne est bien complete
+			//System.out.println(s);
+			String t[] = s.split("\\.|=");
+			if(t[0].equals("ball")){
+				if(t[1].equals("position")){
+					if(t[2].equals("y"))
+						ball.setPositionY(Integer.parseInt(t[3]));
+					else
+						ball.setPositionX(SIZE_PONG_X - Integer.parseInt(t[3]) - ball.getWidth());	
+				}
+				else if(t[1].equals("speed")){
+					if(t[2].equals("y"))
+						ball.setSpeedY(Integer.parseInt(t[3]));
+					else
+						ball.setSpeedX(- Integer.parseInt(t[3]));
+				}
+			}
+			if(t[0].equals("racket")){
+				if(t[1].equals("speed")){
+					if(t[2].equals("y"))
+						racket.setSpeed(Integer.parseInt(t[3]));
+				}
+				else if(t[1].equals("position")){
+					if(t[2].equals("x"))
+						racket.setPositionX(SIZE_PONG_X - Integer.parseInt(t[3]) - racket.getWidth());
+					if(t[2].equals("y"))
+						racket.setPositionY(Integer.parseInt(t[3]));
+				}
+			}
+		}
+  	}
   
   	public void send(PongItem p){
   		out.print(p.toString());
+  	}
+  	
+  	public void close(){
+  		if (socketServeur != null) {
+            try {
+                socketServeur.close();
+            } catch (IOException e) {
+                // TODO : log errors?
+            }
+        }
   	}
 }	
