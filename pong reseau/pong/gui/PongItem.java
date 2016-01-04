@@ -7,8 +7,8 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-public class PongItem {
-	protected final Image img;//final?
+public abstract class PongItem {
+	protected final Image img;
 	protected Point speed;
 	protected int width;
 	protected int height;
@@ -58,7 +58,7 @@ public class PongItem {
 	
 	public PongItem(Image img){
 		ImageIcon icon;
-		this.img = img; //sale?
+		this.img = img;
 		icon = new ImageIcon(img);
 		this.width=icon.getIconWidth();
 		this.height=icon.getIconHeight();
@@ -67,5 +67,4 @@ public class PongItem {
 	public void draw(Graphics graphicContext){
 		graphicContext.drawImage(this.img, position.x, position.y, width, height, null);
 	}
-
 }

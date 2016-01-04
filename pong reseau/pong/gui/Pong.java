@@ -15,10 +15,9 @@ import pong.Connection;
 /** A Pong is a Java graphical container that extends the JPanel class in order to display graphical elements. */
 
 public class Pong extends JPanel implements KeyListener {
-
 	private static final long serialVersionUID = 1L;
 	/** Constant (c.f. final) common to all Pong instances (c.f. static) defining the background color of the Pong */
-	private static final Color backgroundColor = new Color(0x00,0xA0,0xA0);	
+	private static final Color backgroundColor = new Color(0x00,0x00,0x00);	
 	private static final int SIZE_PONG_X = 800;// Width of pong area
 	private static final int SIZE_PONG_Y = 600;/** Height of pong area */
 	public static final int timestep = 10; // Time step of the simulation (in ms)
@@ -27,7 +26,8 @@ public class Pong extends JPanel implements KeyListener {
 	protected Ball ball;
 	private Racket racket;/** One Racket to be displayed */
 	private Racket racket2;
-	public static final int RACKET_SPEED = 4; // Speed of racket (in pixels per second)
+	private MessageItem winner;
+	private MessageItem looser;
 	protected Connection conn;	
 
 	public Pong() {
@@ -36,7 +36,12 @@ public class Pong extends JPanel implements KeyListener {
 		this.racket = new Racket(Toolkit.getDefaultToolkit().createImage(
 				ClassLoader.getSystemResource("image/racket.png")));
 		this.racket2 = new Racket(Toolkit.getDefaultToolkit().createImage(
-				ClassLoader.getSystemResource("image/racket.png")), SIZE_PONG_X - 50, 0);//TODO change -10
+				ClassLoader.getSystemResource("image/racket.png")), SIZE_PONG_X - racket.getWidth(), 0);
+		this.winner = new MessageItem(Toolkit.getDefaultToolkit().createImage(
+				ClassLoader.getSystemResource("image/bulle_winner.png")));
+		this.looser = new MessageItem(Toolkit.getDefaultToolkit().createImage(
+				ClassLoader.getSystemResource("image/bulle_looser.png")));
+		
 		this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
 		this.addKeyListener(this);
 	}
@@ -61,6 +66,14 @@ public class Pong extends JPanel implements KeyListener {
 		conn.receive(ball, racket2, SIZE_PONG_X);
 		ball.animate(SIZE_PONG_X, SIZE_PONG_Y, racket);
 		racket.animate(SIZE_PONG_Y);
+		if (conn != null){
+			conn.send(racket);
+			//if ((ball.getPosition().getX() < SIZE_PONG_X / 2) ^ (racket.getPosition().getX() > SIZE_PONG_X / 2))
+			if(ball.getPosition().getX() < 90)
+				conn.send(ball);
+			if(ball.gameOver == 1)
+				conn.send(Connection.looserMessage);
+		}
 		updateScreen();
 	}
 
@@ -68,11 +81,11 @@ public class Pong extends JPanel implements KeyListener {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_KP_UP:
-				racket.setSpeed(-RACKET_SPEED);
+				racket.setSpeedY(-Racket.RACKET_SPEED);
 				break;
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_KP_DOWN:
-				racket.setSpeed(RACKET_SPEED);
+				racket.setSpeedY(Racket.RACKET_SPEED);
 				break;
 			default:
 				System.out.println("got press "+e);
@@ -82,11 +95,11 @@ public class Pong extends JPanel implements KeyListener {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_KP_UP:
-				racket.setSpeed(0);
+				racket.setSpeedY(0);
 				break;
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_KP_DOWN:
-				racket.setSpeed(0);
+				racket.setSpeedY(0);
 				break;
 			default:
 				System.out.println("got release "+e);
@@ -113,12 +126,6 @@ public class Pong extends JPanel implements KeyListener {
 	 * Draw each Pong item based on new positions
 	 */
 	public void updateScreen() {
-		if (conn != null){
-			conn.send(racket);
-			//if ((ball.getPosition().getX() < SIZE_PONG_X / 2) ^ (racket.getPosition().getX() > SIZE_PONG_X / 2))
-			if(ball.getPosition().getX() < 50)
-				conn.send(ball);
-		}
 		if (buffer == null) { //First time we get called with all windows initialized
 			buffer = createImage(SIZE_PONG_X, SIZE_PONG_Y);
 			if (buffer == null)
@@ -126,7 +133,7 @@ public class Pong extends JPanel implements KeyListener {
 			else
 				graphicContext = buffer.getGraphics();
 		}
-		/* Fill the area with blue */
+		/* Fill the area with black */
 		graphicContext.setColor(backgroundColor);
 		graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
 
@@ -134,7 +141,11 @@ public class Pong extends JPanel implements KeyListener {
 		ball.draw(graphicContext);
 		racket.draw(graphicContext);
 		racket2.draw(graphicContext);
-
+		if(ball.gameOver == 1)
+			looser.draw(graphicContext);
+		if(ball.gameOver == 2)
+			winner.draw(graphicContext);
+		
 		this.repaint();
 	}
 }

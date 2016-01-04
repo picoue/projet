@@ -10,6 +10,7 @@ public class Connection{
 	protected PrintStream out;
 	protected ServerSocket socketServeur;
 	protected int playerID;
+	public static final String looserMessage = "iamalooser";
 	
 	public Connection(int port){
 		try {
@@ -56,7 +57,6 @@ public class Connection{
   	public void receive(Ball ball, Racket racket, int SIZE_PONG_X) throws NumberFormatException, IOException{
 		while(in.ready()){
 			String s = in.readLine();//TODO : tester que la ligne est bien complete
-			//System.out.println(s);
 			String t[] = s.split("\\.|=");
 			if(t[0].equals("ball")){
 				if(t[1].equals("position")){
@@ -72,10 +72,10 @@ public class Connection{
 						ball.setSpeedX(- Integer.parseInt(t[3]));
 				}
 			}
-			if(t[0].equals("racket")){
+			else if(t[0].equals("racket")){
 				if(t[1].equals("speed")){
 					if(t[2].equals("y"))
-						racket.setSpeed(Integer.parseInt(t[3]));
+						racket.setSpeedY(Integer.parseInt(t[3]));
 				}
 				else if(t[1].equals("position")){
 					if(t[2].equals("x"))
@@ -84,12 +84,18 @@ public class Connection{
 						racket.setPositionY(Integer.parseInt(t[3]));
 				}
 			}
+			else if(t[0].equals(looserMessage))
+				ball.setGameOver(2);
 		}
   	}
   
   	public void send(PongItem p){
   		out.print(p.toString());
   	}
+  	
+	public void send(String s){
+		out.println(s);
+	}
   	
   	public void close(){
   		if (socketServeur != null) {

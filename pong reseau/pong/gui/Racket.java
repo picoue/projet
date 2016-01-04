@@ -17,9 +17,6 @@ public class Racket extends PongItem{
 	public Racket(Image img){
 		this(img, 0, 0);
 	}
-	public void setSpeed(int racket_speed){
-		this.speed.y = racket_speed;
-	}
 	
 	public void animate(int SIZE_PONG_Y){
 		this.position.y += this.speed.y;

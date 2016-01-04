@@ -26,9 +26,9 @@ public class Window extends JFrame {
 		setVisible(true);
 
 		while(true) {
-			if(this.pong.getBall().gameOver)
-				break;
 			pong.animate();
+			if(this.pong.getBall().gameOver != 0)
+				break;
 			try {
 				Thread.sleep(Pong.timestep);
 			} catch (InterruptedException e) {};
