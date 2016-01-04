@@ -27,7 +27,6 @@ public class Main  {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("dsdsds");//TODO REMOVE ME
 			e.printStackTrace();
 		}
 	}
